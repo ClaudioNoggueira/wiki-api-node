@@ -20,11 +20,11 @@ const articleSchema = new mongoose.Schema({
 const Article = mongoose.model('Article', articleSchema);
 
 app.get('/articles', (request, response) => {
-    Article.find((err, queryResult) => {
-        if (!err) {
+    Article.find((error, queryResult) => {
+        if (!error) {
             response.send(queryResult);
         } else {
-            response.send("Unable to find articles. Error: " + err);
+            response.send("Unable to find articles. Error: " + error);
         }
     });
 })
@@ -35,11 +35,21 @@ app.post('/articles', (request, response) => {
         content: request.body.content
     });
 
-    newArticle.save((err) => {
-        if (!err) {
+    newArticle.save((error) => {
+        if (!error) {
             response.send("Successfully added a new article.");
         } else {
-            response.send(err);
+            response.send(error);
+        }
+    });
+});
+
+app.delete('/articles', (request, response) => {
+    Article.deleteMany((error) => {
+        if (!error) {
+            response.send("Successfully deleted all articles.");
+        } else {
+            response.send(error);
         }
     });
 });
