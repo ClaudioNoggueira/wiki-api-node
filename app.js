@@ -29,6 +29,21 @@ app.get('/articles', (request, response) => {
     });
 })
 
+app.post('/articles', (request, response) => {
+    const newArticle = new Article({
+        title: request.body.title,
+        content: request.body.content
+    });
+
+    newArticle.save((err) => {
+        if (!err) {
+            response.send("Successfully added a new article.");
+        } else {
+            response.send(err);
+        }
+    });
+});
+
 app.listen(3000, () => {
     console.log("✔ Server is running on port 3000");
 });
