@@ -53,6 +53,21 @@ app.route('/articles')
         });
     });
 
+app.route('/articles/:title')
+    .get((request, response) => {
+        Article.findOne({ title: request.params.title }, (error, queryResult) => {
+            if (!error) {
+                if (queryResult) {
+                    response.send(queryResult);
+                } else {
+                    response.send("Unable to find article with title: '" + request.params.title);
+                }
+            } else {
+                response.send(error);
+            }
+        });
+    });
+
 app.listen(3000, () => {
     console.log("✔ Server is running on port 3000");
 });
