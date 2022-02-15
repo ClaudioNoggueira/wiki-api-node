@@ -66,6 +66,21 @@ app.route('/articles/:title')
                 response.send(error);
             }
         });
+    })
+    .put((request, response) => {
+        Article.updateOne(
+            { title: request.params.title },
+            {
+                title: request.body.title,
+                content: request.body.content
+            },
+            (error) => {
+                if (!error) {
+                    response.send("Successfully updated article.")
+                } else {
+                    response.send(error);
+                }
+            })
     });
 
 app.listen(3000, () => {
