@@ -81,6 +81,18 @@ app.route('/articles/:title')
                     response.send(error);
                 }
             })
+    })
+    .patch((request, response) => {
+        Article.updateOne(
+            { title: request.params.title },
+            { $set: request.body },
+            (error) => {
+                if (!error) {
+                    response.send("Successfully updated article.")
+                } else {
+                    response.send(error);
+                }
+            });
     });
 
 app.listen(3000, () => {
