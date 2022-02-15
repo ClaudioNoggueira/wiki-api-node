@@ -93,6 +93,15 @@ app.route('/articles/:title')
                     response.send(error);
                 }
             });
+    })
+    .delete((request, response) => {
+        Article.deleteOne({ title: request.params.title }, (error) => {
+            if (!error) {
+                response.send("Successfully deleted article.");
+            } else {
+                response.send(error);
+            }
+        });
     });
 
 app.listen(3000, () => {
